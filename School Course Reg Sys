@@ -1,0 +1,42 @@
+CREATE DATABASE schoolcourses;
+USE schoolcourses;
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100)
+);
+
+CREATE TABLE departments (
+    department_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100)
+);
+
+CREATE TABLE instructors (
+    instructor_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(150),
+    instructor_id INT,
+    FOREIGN KEY (instructor_id) REFERENCES instructors(instructor_id)
+);
+
+CREATE TABLE enrollments (
+    enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+
+CREATE TABLE grades (
+    grade_id INT PRIMARY KEY AUTO_INCREMENT,
+    enrollment_id INT,
+    grade INT,
+    FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id)
+);
